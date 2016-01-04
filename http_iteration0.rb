@@ -14,7 +14,9 @@ end
 
 puts "Got this request:"
 puts request_lines.inspect
-
+if request_lines.inspect
+  @count += 1
+end
 #build response
 puts "Sending response."
 @count = 0
@@ -27,7 +29,7 @@ headers = ["http/1.1 200 ok",
           "content-length: #{output.length}\r\n\r\n"].join("\r\n")
 client.puts headers
 client.puts output
-@count += 1
+
 
 #close server
 puts ["Wrote this response:", headers, output].join("\n")
