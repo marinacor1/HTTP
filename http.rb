@@ -17,9 +17,8 @@ puts request_lines.inspect
 
 #build response
 puts "Sending response."
-@count = 0
 response = "<pre>" + request_lines.join("\n") + "</pre>"
-output = "<html><head></head><body>Hello, World! (#{@count})</body></html>"
+output = "<html><head></head><body>#{response}</body></html>"
 headers = ["http/1.1 200 ok",
           "date: #{Time.now.strftime('%a, %e %b %Y %H:%M:%S %z')}",
           "server: ruby",
@@ -27,7 +26,6 @@ headers = ["http/1.1 200 ok",
           "content-length: #{output.length}\r\n\r\n"].join("\r\n")
 client.puts headers
 client.puts output
-@count += 1
 
 #close server
 puts ["Wrote this response:", headers, output].join("\n")
