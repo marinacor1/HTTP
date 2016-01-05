@@ -5,7 +5,7 @@ client = tcp_server.accept
 #We can read the request from the client object which is what we call an IO stream
 @count = 0
 loop do
-  
+
   @count += 1
   puts "Ready for a request"
   request_lines = []
@@ -27,7 +27,6 @@ loop do
             "content-length: #{output.length}\r\n\r\n"].join("\r\n")
   client.puts headers
   client.puts output
-
 end
 
 puts ["Wrote this response:", headers, output].join("\n")
