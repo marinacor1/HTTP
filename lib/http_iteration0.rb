@@ -1,25 +1,22 @@
-#Let's start our server instance and have it listen on port 9292
 require 'socket'
 tcp_server = TCPServer.new(9292)
-client = tcp_server.accept
-#We can read the request from the client object which is what we call an IO stream
-@count = 0
+@counter = 0
 loop do
+  @counter += 1
+  client = tcp_server.accept
 
-  @count += 1
   puts "Ready for a request"
   request_lines = []
   while line = client.gets and !line.chomp.empty?
     request_lines << line.chomp
   end
 
-    puts "Got this request:"
-    puts request_lines.inspect
-
+  puts "Got this request:"
+  puts request_lines.inspect
 
   puts "Sending response."
   response = "<pre>" + request_lines.join("\n") + "</pre>"
-  output = "<html><head></head><body>Hello World #{@count}</body></html>"
+  output = "<html><head></head><body>HELLO WORLD(#{@counter})    ==   #{response}</body></html>"
   headers = ["http/1.1 200 ok",
             "date: #{Time.now.strftime('%a, %e %b %Y %H:%M:%S %z')}",
             "server: ruby",
@@ -28,8 +25,7 @@ loop do
   client.puts headers
   client.puts output
 
+  # puts ["Wrote this response:", headers, output].join("\n")
+  client.close
 end
-
-puts ["Wrote this response:", headers, output].join("\n")
-client.close
 puts "\nResponse complete, exiting."

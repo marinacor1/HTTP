@@ -35,7 +35,8 @@ Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0
 
 client = Hurley::Client.new "localhost:9292"
 puts "<pre"
-puts: "Verb: POST"
+puts "Host: #{client.host}"
+puts "Port: #{client.port}"
 
 
 puts "</pre>"
