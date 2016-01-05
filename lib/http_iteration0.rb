@@ -1,5 +1,3 @@
-require 'hurley'
-
 #Let's start our server instance and have it listen on port 9292
 require 'socket'
 tcp_server = TCPServer.new(9292)
@@ -29,6 +27,7 @@ loop do
             "content-length: #{output.length}\r\n\r\n"].join("\r\n")
   client.puts headers
   client.puts output
+
 end
 
 puts ["Wrote this response:", headers, output].join("\n")
