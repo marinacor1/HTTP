@@ -1,3 +1,5 @@
+require 'hurley'
+
 #Let's start our server instance and have it listen on port 9292
 require 'socket'
 tcp_server = TCPServer.new(9292)
