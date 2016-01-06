@@ -9,6 +9,7 @@ class ResponseGenerator
     if request.join.split[1] == "/hello" then return hello(counter)
     elsif request.join.split[1] == "/datetime" then return datetime
     elsif request.join.split[1] == "/shutdown" then return shutdown(counter)
+    elsif request.join.include?("word_search") then return word_search(request)
     else return diagnostics(request)
     end
   end
@@ -40,6 +41,25 @@ class ResponseGenerator
     # client.close
   end
 
+  def word_search(request)
+    word = request[0].split(" ")[1].split("word")[2].delete("=")
+
+    #word = request[0].split("/")[1].split(" ")[0].split("word")[2].delete("=")
+
+    words = {}
+    File.open("/usr/share/dict/words") do |file|
+       file.each do |line|
+        words[line.strip] = true
+      end
+    end
+
+    if words[word] == true
+      "#{word} is a known word"
+    else
+      "#{word} is not a known word"
+    end
+
+  end
 
 #ping = hurley.get
 

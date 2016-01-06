@@ -16,7 +16,6 @@ class ServerConnector
     end
 
     output = response_generator.path_filter(request_lines, counter)
-
     client.puts output
     if output.include? "Total Requests:"
       tcp_server.close
