@@ -24,9 +24,6 @@ class ResponseGenerator
     "Port: #{request[1][-4]}#{request[1][-3]}#{request[1][-2]}#{request[1][-1]}",
     "Origin: #{request[1].split(" ")[1].split(":")[0]}", "Accept:#{request[6].split(":")[1]+request[8]+request[11].split(";")[1]}"]
 
-    # result = result.map do |line|
-    #   line
-    # end
   end
 
   def datetime
@@ -44,14 +41,3 @@ class ResponseGenerator
 
 
 end
-  # puts "Got this request:"
-# puts request_lines.inspect
-#
-# puts "Sending response."
-# response = "<pre>" + request_lines.join("\n") + "</pre>"
-# output = "<html><head></head><body>HELLO WORLD(#{@counter})    ==   #{response}</body></html>"
-# headers = ["http/1.1 200 ok",
-#           "date: #{Time.now.strftime('%a, %e %b %Y %H:%M:%S %z')}",
-#           "server: ruby",
-#           "content-type: text/html; charset=iso-8859-1",
-#           "content-length: #{output.length}\r\n\r\n"].join("\r\n")

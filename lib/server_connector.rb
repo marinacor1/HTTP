@@ -15,7 +15,6 @@ loop do
 
   output = response_generator.iterator0_result(request_lines, counter)
 
-  # output = "<html><head></head><body>HELLO WORLD(#{@counter})</body></html>"
   client.puts output
   client.close
   counter += 1
