@@ -16,11 +16,13 @@ class ServerConnector
     end
 
     output = response_generator.path_filter(request_lines, counter)
-
+    # binding.pry
     client.puts output
+
     if output.include? "Total Requests:"
       tcp_server.close
     end
+    
     client.close
     counter += 1
   end
