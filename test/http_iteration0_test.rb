@@ -1,9 +1,10 @@
 require 'Hurley'
+require 'Socket'
 require_relative '../lib/http_iteration0'
 
 #do we need to do a setup
 #how do we get hurley testing?
-
+class
 def test_port_is_9292
   client = Hurley::Client.new "http://127.0.0.1:9292/"
   assert_equal 9292, client.port

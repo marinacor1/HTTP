@@ -1,4 +1,5 @@
 require 'pry'
+require 'hurley'
 
 class ResponseGenerator
 
@@ -22,9 +23,11 @@ class ResponseGenerator
     "#{request[1]}",
     "Port: #{request[1][-4]}#{request[1][-3]}#{request[1][-2]}#{request[1][-1]}",
     "Origin: #{request[1].split(" ")[1].split(":")[0]}", "Accept:#{request[6].split(":")[1]+request[8]+request[11].split(";")[1]}"]
-    result = result.map do |line|
-      puts line
-    end
+
+    # result = result.map do |line|
+    #   line
+    # end
+  end
 
   def datetime
     t = Time.new
@@ -36,7 +39,7 @@ class ResponseGenerator
   end
 
 
-
+#ping = hurley.get
 
 
 
