@@ -15,7 +15,8 @@ class ResponseGenerator
     "Protocol: #{request[0].split(" ")[2]}",
     "#{request[1]}",
     "Port: #{request[1][-4] + request[1][-3] + request[1][-2] + request[1][-1]}",
-    "Origin: #{request[1].split(" ")[1]}"
+    "Origin: request[1].split(" ")[1].split(" : ")[0]"
+    
 
    ]
 
