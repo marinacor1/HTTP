@@ -128,6 +128,7 @@ class ResponseGeneratorTest < Minitest::Test
                "DNT: 1",
                "Accept-Encoding: gzip, deflate, sdch",
                "Accept-Language: en-US,en;q=0.8"]
+    counter = 0
 
     assert_equal "Total Requests: 0", response_generator.iterator0_result(request)
   end
