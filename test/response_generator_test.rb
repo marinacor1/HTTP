@@ -10,7 +10,6 @@ class ResponseGeneratorTest < Minitest::Test
 
   def test_port_is_9292
     client = Hurley::Client.new "http://127.0.0.1:9292/"
-    # binding.pry
     assert_equal 9292, client.port
   end
 
@@ -18,7 +17,6 @@ class ResponseGeneratorTest < Minitest::Test
     skip
     #  client = Hurley::Client.new "http://127.0.0.1:9292/"
       response = Hurley.get("http://127.0.0.1:9292/")
-    #  binding.pry
      assert response.success?
   end
 
@@ -26,7 +24,6 @@ class ResponseGeneratorTest < Minitest::Test
     skip
     # client = Hurley::Client.new "http://127.0.0.1:9292/"
     response = Hurley.post("http://127.0.0.1:9292/")
-
     assert response.body.include?("<html>")
   end
 
