@@ -15,11 +15,13 @@ class ServerConnector
       request_lines << line.chomp
     end
 
-    output = response_generator.iterator0_result(request_lines, counter)
+    output = response_generator.path_filter(request_lines, counter)
 
     client.puts output
+    if output.include? "Total Requests:"
+      tcp_server.close
+    end
     client.close
     counter += 1
   end
-
 end
