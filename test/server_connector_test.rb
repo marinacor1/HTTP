@@ -6,6 +6,9 @@ require 'hurley'
 require_relative '../lib/response_generator'
 
 class ServerConnectorTest < Minitest::Test
-  client = Hurley::Client.new "http://127.0.0.1:9292/"
-  assert_equal "127.0.0.1:9292/", client.host
+
+  def test_client_has_host
+    client = Hurley::Client.new "http://127.0.0.1:9292/"
+    assert_equal "127.0.0.1", client.host
+  end
 end

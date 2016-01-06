@@ -1,10 +1,11 @@
 require 'pry'
 require 'hurley'
+require 'socket'
 
 class ResponseGenerator
 
 
-  def iterator0_result(request, counter = 0)
+  def path_filter(request, counter = 0)
     if request.join.split[1] == "/hello" then return hello(counter)
     elsif request.join.split[1] == "/datetime" then return datetime
     elsif request.join.split[1] == "/shutdown" then return shutdown(counter)
@@ -32,7 +33,11 @@ class ResponseGenerator
   end
 
   def shutdown(counter)
-    "Total Requests: #{counter}"
+    "Total Requests: #{counter+=1}"
+    # tcp_server = TCPServer.new(9292)
+    #
+    # client = tcp_server.accept
+    # client.close
   end
 
 
