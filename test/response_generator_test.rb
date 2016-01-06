@@ -10,23 +10,20 @@ class ResponseGeneratorTest < Minitest::Test
 
   def test_port_is_9292
     client = Hurley::Client.new "http://127.0.0.1:9292/"
-    # binding.pry
     assert_equal 9292, client.port
   end
 
   def test_responds_to_HTTP_requests
-    skip
-    #  client = Hurley::Client.new "http://127.0.0.1:9292/"
-      response = Hurley.get("http://127.0.0.1:9292/")
-    #  binding.pry
-     assert response.success?
+
+      # client = Hurley::Client.new "http://127.0.0.1:9292/"
+      # response = Hurley.get("http://127.0.0.1:9292/")
+     assert client.connection
   end
 
   def test_response_is_in_HTML
     skip
     # client = Hurley::Client.new "http://127.0.0.1:9292/"
     response = Hurley.post("http://127.0.0.1:9292/")
-
     assert response.body.include?("<html>")
   end
 
@@ -136,7 +133,10 @@ class ResponseGeneratorTest < Minitest::Test
     assert_equal "Total Requests: 1", response_generator.path_filter(request)
   end
 
-        ["GET /word_search?word=WORD&word2=NOTWORD HTTP/1.1",
+  def test_word_search_gives_appropriate_message_for_known_word
+    response_generator = ResponseGenerator.new
+
+  request = ["GET /word_search?word=coffee HTTP/1.1",
        "Host: 127.0.0.1:9292",
        "Connection: keep-alive",
        "Cache-Control: no-cache",
@@ -147,4 +147,29 @@ class ResponseGeneratorTest < Minitest::Test
        "Accept-Encoding: gzip, deflate, sdch",
        "Accept-Language: en-US,en;q=0.8"]
 
+       word = "coffee"
+       assert_equal "coffee is a known word", response_generator.path_filter(request)
+  end
+
+  def test_word_search_gives_appropriate_message_for_unknown_word
+    response_generator = ResponseGenerator.new
+
+  request = ["GET /word_search?word=kerrw HTTP/1.1",
+>>>>>>> master
+       "Host: 127.0.0.1:9292",
+       "Connection: keep-alive",
+       "Cache-Control: no-cache",
+       "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36",
+       "Postman-Token: db8775b9-67e3-d5ed-d66a-58661ad1c420",
+       "Accept: */*",
+       "DNT: 1",
+       "Accept-Encoding: gzip, deflate, sdch",
+       "Accept-Language: en-US,en;q=0.8"]
+
+<<<<<<< HEAD
+=======
+       word = "kerrw"
+       assert_equal "kerrw is not a known word", response_generator.path_filter(request)
+  end
+>>>>>>> master
 end
