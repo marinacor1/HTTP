@@ -1,7 +1,7 @@
 require 'socket'
 require_relative 'response_generator'
 
-# response_generator = ResponseGenerator.new
+response_generator = ResponseGenerator.new
 
 tcp_server = TCPServer.new(9292)
 counter = 0

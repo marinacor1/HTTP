@@ -1,8 +1,8 @@
-  require 'socket'
+require "pry"
+require 'socket'
 tcp_server = TCPServer.new(9292)
 counter = 0
 loop do
-  counter += 1
   client = tcp_server.accept
 
   puts "Ready for a request"
@@ -11,9 +11,12 @@ loop do
     request_lines << line.chomp
   end
 
+  output = request_lines
 
-  client.puts headers
+  # client.puts headers
   client.puts output
+  puts output
 
   client.close
+  counter += 1
 end
