@@ -1,7 +1,7 @@
-# require_relative 'server'
-require 'pry'
-require
+
+
 class ResponseGenerator
+
 
   def iterator0_result(request, counter = 1)
 
@@ -10,12 +10,17 @@ class ResponseGenerator
   end
 
   def iterator1_result(request)
-    "Verb: #{request[0].split(" ")[0]}"
-    "Path: #{request[0].split(" ")[1]}"
-    "Protocol: #{request[0].split(" ")[2]}"
-    "#{request[1]}"
-    "Port: #{request[1][-4] + request[1][-3] + request[1][-2] + request[1][-1]}"
-    
+    result = ["Verb: #{request[0].split(" ")[0]}",
+    "Path: #{request[0].split(" ")[1]}",
+    "Protocol: #{request[0].split(" ")[2]}",
+    "#{request[1]}",
+    "Port: #{request[1][-4] + request[1][-3] + request[1][-2] + request[1][-1]}",
+    "Origin: #{request[1].split(" ")[1]}"
+
+   ]
+
+   #.chomp deletes backslash
+
 
   end
 
