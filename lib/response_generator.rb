@@ -65,7 +65,7 @@ class ResponseGenerator
 
   def guessing_game(request, counter = 0)
       #user submits POST to /start_game
-      guess =
+      guess = 4
       @response_code = "301 Permanently Moved"
       counter += 1
       num = "Number of guesses: #{counter}"
