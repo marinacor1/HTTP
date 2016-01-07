@@ -69,7 +69,7 @@ class ResponseGeneratorTest < Minitest::Test
                "DNT: 1",
                "Accept-Encoding: gzip, deflate",
                "Accept-Language: en-US,en;q=0.8"]
-
+              #  binding.pry
     assert_equal "Verb: POST", response_generator.path_filter(request)[0]
     assert_equal "Path: /", response_generator.path_filter(request)[1]
     assert_equal "Protocol: HTTP/1.1", response_generator.path_filter(request)[2]
@@ -80,7 +80,7 @@ class ResponseGeneratorTest < Minitest::Test
   end
 
   def test_returns_date_and_time_when_called
-    skip
+    # skip
     response_generator = ResponseGenerator.new
     request =["GET /datetime HTTP/1.1",
              "Host: 127.0.0.1:9292",
@@ -98,7 +98,7 @@ class ResponseGeneratorTest < Minitest::Test
   end
 
   def test_returns_shutdown_and_counter_when_called
-    skip
+    # skip
     #cant really test without pinging the server from test suite
 
     response_generator = ResponseGenerator.new
@@ -118,7 +118,7 @@ class ResponseGeneratorTest < Minitest::Test
   end
 
   def test_word_search_gives_appropriate_message_for_known_word
-    skip
+    # skip
     response_generator = ResponseGenerator.new
 
   request = ["GET /word_search?word=coffee HTTP/1.1",
@@ -137,7 +137,7 @@ class ResponseGeneratorTest < Minitest::Test
   end
 
   def test_word_search_gives_appropriate_message_for_unknown_word
-    skip
+    # skip
     response_generator = ResponseGenerator.new
 
   request = ["GET /word_search?word=kerrw HTTP/1.1",
