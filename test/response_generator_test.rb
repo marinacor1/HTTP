@@ -2,9 +2,9 @@ gem 'minitest', '~> 5.2'
 require 'pry'
 require 'minitest/autorun'
 require 'minitest/pride'
-require 'socket'
+# require 'socket'
 require 'hurley'
-require '../lib/response_generator'
+require_relative '../lib/response_generator'
 
 class ResponseGeneratorTest < Minitest::Test
 
@@ -36,23 +36,23 @@ class ResponseGeneratorTest < Minitest::Test
     assert_equal "HELLO WORLD(#{counter})", response_generator.path_filter(request, counter)
   end
 
-  def test_hello_world_counter_increases
-    response_generator = ResponseGenerator.new
-    response_generator_2 = ResponseGenerator.new
-    response_generator_3 = ResponseGenerator.new
-    request = ["GET /hello HTTP/1.1",
-              "Host: 127.0.0.1:9292",
-              "Connection: keep-alive",
-              "Cache-Control: no-cache",
-              "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36",
-              "Postman-Token: 2ce77957-f9bc-d829-5c52-52b4dabe0864",
-              "Accept: */*",
-              "DNT: 1",
-              "Accept-Encoding: gzip, deflate, sdch",
-              "Accept-Language: en-US,en;q=0.8"]
-    counter = 0
-   assert_equal "HELLO WORLD(3)", response_generator.path_filter(request, counter)
-  end
+  # def test_hello_world_counter_increases
+  #   response_generator = ResponseGenerator.new
+  #   response_generator_2 = ResponseGenerator.new
+  #   response_generator_3 = ResponseGenerator.new
+  #   request = ["GET /hello HTTP/1.1",
+  #             "Host: 127.0.0.1:9292",
+  #             "Connection: keep-alive",
+  #             "Cache-Control: no-cache",
+  #             "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36",
+  #             "Postman-Token: 2ce77957-f9bc-d829-5c52-52b4dabe0864",
+  #             "Accept: */*",
+  #             "DNT: 1",
+  #             "Accept-Encoding: gzip, deflate, sdch",
+  #             "Accept-Language: en-US,en;q=0.8"]
+  #   counter = 0
+  #  assert_equal "HELLO WORLD(3)", response_generator.path_filter(request, counter)
+  # end
 
   def test_correctly_parses_verb
     response_generator = ResponseGenerator.new
@@ -115,9 +115,6 @@ class ResponseGeneratorTest < Minitest::Test
   end
 
   def test_returns_shutdown_and_counter_when_called
-    # skip
-    #cant really test without pinging the server from test suite
-
     response_generator = ResponseGenerator.new
     request =  ["GET /shutdown HTTP/1.1",
                "Host: 127.0.0.1:9292",

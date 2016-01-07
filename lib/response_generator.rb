@@ -29,6 +29,7 @@ class ResponseGenerator
   end
 
   def parse(request)
+    binding.pry
     @verb = request[0].split(" ")[0]
     @path = request[0].split(" ")[1]
     @protocol = request[0].split(" ")[2]
@@ -91,7 +92,7 @@ class ResponseGenerator
         puts @output
          #game finishes. counter reset to 0
           correct_number = rand[0..100]
-      # end
+       end
   end
 
 end
