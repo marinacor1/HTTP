@@ -4,6 +4,7 @@ require 'socket'
 
 class ResponseGenerator
 
+  attr_reader :response_code
   attr_accessor :output
 
   def path_filter(request, counter = 0)
@@ -13,9 +14,9 @@ class ResponseGenerator
     elsif  request.join.include?("/shutdown")   then return shutdown(counter)
     elsif  request.join.include?("word_search") then return word_search(request)
     elsif  request.join.include?("/start_game") then return guessing_game(request, counter)
-    # elsif  request.join.include?("GET / HTTP/") then return diagnostics(request)
+    # elsif  request.join.include?("GET / HTTP/") then return parse(request)
     else
-      diagnostics(request)
+      parse(request)
     end
   end
 
@@ -27,13 +28,21 @@ class ResponseGenerator
     "HELLO WORLD(#{counter})"
   end
 
-  def diagnostics(request)
-    result = ["Verb: #{request[0].split(" ")[0]}",
-    "Path: #{request[0].split(" ")[1]}",
-    "Protocol: #{request[0].split(" ")[2]}",
-    "#{request[1]}",
-    "Port: #{request[1][-4]}#{request[1][-3]}#{request[1][-2]}#{request[1][-1]}",
-    "Origin: #{request[1].split(" ")[1].split(":")[0]}", "Accept:#{request[6].split(":")[1]+request[8]+request[11].split(";")[1]}"]
+  def parse(request)
+    @verb = request[0].split(" ")[0]
+    @path = request[0].split(" ")[1]
+    @protocol = request[0].split(" ")[2]
+    # request[1]
+    @port = request[1][-4]
+    # request[1][-3]request[1][-2]}request[1][-1]
+    @origin = request[1].split(" ")[1].split(":")[0]
+    @accept = request[6].split(":")[1]
+    # request[8]request[11].split(";")[1]
+    result = ["Verb: #{@verb}",
+    "Path: #{@path}",
+    "Protocol: #{@protocol}",
+    "Port:  #{@port}",
+    "Origin: #{@origin}", "Accept:#{@accept}"]
   end
 
   def datetime
@@ -54,40 +63,35 @@ class ResponseGenerator
     end
   end
 
-
   def guessing_game(request, counter = 0)
-    @response_code = 
+      #user submits POST to /start_game
+      guess =
+      @response_code = "301 Permanently Moved"
+      counter += 1
+      num = "Number of guesses: #{counter}"
+      correct_number = rand[0..100]
 
-    #user submits POST to /start_game
-    counter += 1
-    num = "Number of guesses: #{counter}"
-
-    "Good Luck!
-    Number of guesses: #{counter}
-    <form action='/start_game' method='post'>
-    <input type='Type Your Guess'></input>
-    </form>"
-    # #guess = pulls from response
-    #  difference = guess <=> correct_number
-    # # #user submits GET to/guessing_game
-    #
-    #      correct_number = rand[0..100]
-    # #
-    #   if difference > 0
-    #     @ouput = "Your guess is too high; try again."
-    #     puts @output
-    # #     #replay game with current correct_number passed in
-    #   elsif difference < 0
-    #     @output =  "Your guess is too low; try again."
-    #     puts @output
-    # #     #replay game with current correct_number passed in
-    #   else
-    #     @output = "You got it right! Way to go!"
-    #     puts @output
-    # #     #end game. counter reset to 0
-    #     counter = 0
-    #   end
-
+        "Good Luck!
+        Number of guesses: #{counter}"
+        # <form action='/start_game' method='post'>
+        # <input type='Type Your Guess'></input>
+        # </form>"
+        # #guess = pulls from response
+        # # #user submits GET to/guessing_game
+      if guess > correct_number
+        @ouput = "Your guess is too high; try again."
+        puts @output
+         #replay game with current correct_number passed in
+      elsif guess < correct_number
+        @output =  "Your guess is too low; try again."
+        puts @output
+         #replay game with current correct_number passed in
+      else
+        @output = "You got it right! Way to go!"
+        puts @output
+         #game finishes. counter reset to 0
+          correct_number = rand[0..100]
+      # end
   end
 
 end
