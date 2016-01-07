@@ -3,7 +3,7 @@ require 'hurley'
 require 'socket'
 
 class ResponseGenerator
-
+  attr_accessor :output
 
   def path_filter(request, counter = 0)
     if request.join.split[1] == "/hello" then return hello(counter)
@@ -25,7 +25,6 @@ class ResponseGenerator
     "#{request[1]}",
     "Port: #{request[1][-4]}#{request[1][-3]}#{request[1][-2]}#{request[1][-1]}",
     "Origin: #{request[1].split(" ")[1].split(":")[0]}", "Accept:#{request[6].split(":")[1]+request[8]+request[11].split(";")[1]}"]
-
   end
 
   def datetime
@@ -57,6 +56,40 @@ class ResponseGenerator
       "#{word} is a known word"
     else
       "#{word} is not a known word"
+    end
+
+
+    def guessing_game(request)
+      #user submits POST to /start_game
+      puts "Good Luck!"
+      counter = 0
+      correct_number
+      #guess = pulls from response
+      difference = guess <=> correct_number
+      #user submits GET to/guessing_game
+      counter += 1
+        if counter > 0
+          num= "Number of guesses: #{counter}"
+          puts num
+        else
+          correct_number = rand[0..100]
+        end
+
+        if difference > 0
+          @ouput = "Your guess is too high; try again."
+          puts @output
+          #replay game with current correct_number passed in
+        elsif difference < 0
+          @output =  "Your guess is too low; try again."
+          puts @output
+          #replay game with current correct_number passed in
+        else
+          @output = "You got it right! Way to go!"
+          puts @output
+          #end game. counter reset to 0
+          counter = 0
+        end
+
     end
 
   end
