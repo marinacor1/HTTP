@@ -23,7 +23,10 @@ class ServerConnector
       counter -= 1
     end
     # binding.pry
+    # diagnostics = response_generator.diagnostics(request_lines)
     filtered_response = response_generator.path_filter(request_lines, counter)
+
+
 
     puts "Sending response."
     response = "<pre>" + filtered_response + "</pre>"
