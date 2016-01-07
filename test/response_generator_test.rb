@@ -174,7 +174,7 @@ class ResponseGeneratorTest < Minitest::Test
     assert_equal "Good Luck!", response_generator.path_filter(request)
   end
 
-  def test_gives_number_of_guesses_only_if_over_0
+  def test_gives_number_of_guesses
     skip
     response_generator = ResponseGenerator.new
     request = ["GET / to/game",
@@ -189,16 +189,13 @@ class ResponseGeneratorTest < Minitest::Test
                "DNT: 1",
                "Accept-Encoding: gzip, deflate",
                "Accept-Language: en-US,en;q=0.8"]
-    counter = 0
-    assert_equal nil,
-     response_generator.path_filter(request).num
      counter = 1
      assert_equal 1,
       response_generator.path_filter(request).num
   end
 
   def test_correctly_outputs_if_guess_too_high
-     skip
+    skip
     response_generator = ResponseGenerator.new
     request = ["GET / to/game",
                "Host: 127.0.0.1:9292",
@@ -216,6 +213,46 @@ class ResponseGeneratorTest < Minitest::Test
     guess = 49
     assert_equal "Your guess is too high; try again.",       response_generator.path_filter(request).output
 
+  end
+
+  def test_correctly_outputs_if_guess_too_low
+    skip
+    response_generator = ResponseGenerator.new
+    request = ["GET / to/game",
+               "Host: 127.0.0.1:9292",
+               "Connection: keep-alive",
+               "Content-Length: 0",
+               "Cache-Control: no-cache",
+               "Origin: chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop",
+               "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36",
+               "Postman-Token: bf55936b-ce9d-de04-b68f-c886ffcd2f40",
+               "Accept: */*",
+               "DNT: 1",
+               "Accept-Encoding: gzip, deflate",
+               "Accept-Language: en-US,en;q=0.8"]
+    correct_number = 7
+    guess = 2
+    assert_equal "Your guess is too low; try again.",       response_generator.path_filter(request).output
+  end
+
+  def test_correctly_outputs_if_guess_correct
+    skip
+    response_generator = ResponseGenerator.new
+    request = ["GET / to/game",
+               "Host: 127.0.0.1:9292",
+               "Connection: keep-alive",
+               "Content-Length: 0",
+               "Cache-Control: no-cache",
+               "Origin: chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop",
+               "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36",
+               "Postman-Token: bf55936b-ce9d-de04-b68f-c886ffcd2f40",
+               "Accept: */*",
+               "DNT: 1",
+               "Accept-Encoding: gzip, deflate",
+               "Accept-Language: en-US,en;q=0.8"]
+    correct_number = 7
+    guess = 7
+    assert_equal "You got it right! Way to go!",       response_generator.path_filter(request).output
   end
 
 end

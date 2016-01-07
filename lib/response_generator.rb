@@ -83,12 +83,8 @@ class ResponseGenerator
     difference = guess <=> correct_number
     #user submits GET to/guessing_game
     counter += 1
-      if counter > 0
-        num= "Number of guesses: #{counter}"
-        puts num
-      else
+        puts num = "Number of guesses: #{counter}"
         correct_number = rand[0..100]
-      end
 
       if difference > 0
         @ouput = "Your guess is too high; try again."
