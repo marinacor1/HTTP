@@ -57,7 +57,10 @@ class ResponseGenerator
 
 
   def guessing_game(request, counter = 0)
+<<<<<<< Updated upstream
     @response_code = 
+=======
+>>>>>>> Stashed changes
     #user submits POST to /start_game
     counter += 1
     num = "Number of guesses: #{counter}"
