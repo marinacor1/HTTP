@@ -7,8 +7,8 @@ class ResponseGenerator
   attr_accessor :output
 
   def path_filter(request, counter = 0)
-    # binding.pry
-    if     request.join.include?("/hello")      then return hello(counter)
+    request.join
+    if     for_path(request, "/hello")      then return hello(counter)
     elsif  request.join.include?("/datetime")   then return (datetime)
     elsif  request.join.include?("/shutdown")   then return shutdown(counter)
     elsif  request.join.include?("word_search") then return word_search(request)
@@ -19,7 +19,9 @@ class ResponseGenerator
     end
   end
 
-
+  def for_path(request,path)
+    request.join.include?(path)
+  end
 
   def hello(counter)
     "HELLO WORLD(#{counter})"
@@ -46,23 +48,11 @@ class ResponseGenerator
 
   def word_search(request)
     word = request[0].split(" ")[1].split("word")[2].delete("=")
-
-    #word = request[0].split("/")[1].split(" ")[0].split("word")[2].delete("=")
-
-    words = {}
-    File.open("/usr/share/dict/words") do |file|
-       file.each do |line|
-        words[line.strip] = true
-      end
-    end
-
-    if words[word] == true
-      dictionary_response = "#{word} is a known word"
+    if File.read("/usr/share/dict/words").include?("#{word}")
+      "#{word} is a known word"
     else
-      # binding.pry
-      dictionary_response = "#{word} is not a known word"
+      "#{word} is not a known word"
     end
-    return dictionary_response
   end
 
 
