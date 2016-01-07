@@ -68,14 +68,14 @@ class ResponseGenerator
 
   def guessing_game(request, counter = 0)
     #user submits POST to /start_game
+    counter += 1
+    num = "Number of guesses: #{counter}"
+
     "Good Luck!
     Number of guesses: #{counter}
     <form action='/start_game' method='post'>
-      <input type='Type Your Guess'></input>
+    <input type='Type Your Guess'></input>
     </form>"
-
-    counter += 1
-    num = "Number of guesses: #{counter}"
     # #guess = pulls from response
     #  difference = guess <=> correct_number
     # # #user submits GET to/guessing_game
