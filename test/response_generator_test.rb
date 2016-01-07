@@ -32,9 +32,8 @@ class ResponseGeneratorTest < Minitest::Test
                "Accept-Language: en-US,en;q=0.8"]
      counter = 0
 
-     output = "<html><head></head><body>HELLO WORLD(#{counter})</body></html>"
 
-    assert_equal output, response_generator.path_filter(request, counter)
+    assert_equal "HELLO WORLD(#{counter})", response_generator.path_filter(request, counter)
   end
 
   def test_correctly_parses_verb
@@ -114,7 +113,7 @@ class ResponseGeneratorTest < Minitest::Test
                "Accept-Language: en-US,en;q=0.8"]
     counter = 0
 
-    assert_equal "Total Requests: 1", response_generator.path_filter(request)
+    assert_equal "Total Requests: 0", response_generator.path_filter(request)
   end
 
   def test_word_search_gives_appropriate_message_for_known_word
@@ -132,7 +131,6 @@ class ResponseGeneratorTest < Minitest::Test
        "Accept-Encoding: gzip, deflate, sdch",
        "Accept-Language: en-US,en;q=0.8"]
 
-       word = "coffee"
        assert_equal "coffee is a known word", response_generator.path_filter(request)
   end
 
@@ -151,14 +149,13 @@ class ResponseGeneratorTest < Minitest::Test
        "Accept-Encoding: gzip, deflate, sdch",
        "Accept-Language: en-US,en;q=0.8"]
 
-       word = "kerrw"
        assert_equal "kerrw is not a known word", response_generator.path_filter(request)
   end
 
   def test_guessing_game_prints_Good_Luck_at_initiation
-    skip
+     skip
     response_generator = ResponseGenerator.new
-    request = ["POST / to/start_game",
+    request = ["POST / to/start_game HTTP/1.1",
                "Host: 127.0.0.1:9292",
                "Connection: keep-alive",
                "Content-Length: 0",
@@ -171,7 +168,8 @@ class ResponseGeneratorTest < Minitest::Test
                "Accept-Encoding: gzip, deflate",
                "Accept-Language: en-US,en;q=0.8"]
 
-    assert_equal "Good Luck!", response_generator.path_filter(request)
+    guess = 4
+    assert response_generator.path_filter(request).include?("Good Luck~")
   end
 
   def test_gives_number_of_guesses
