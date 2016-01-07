@@ -1,4 +1,4 @@
-  require 'socket'
+
 tcp_server = TCPServer.new(9292)
 @counter = 0
 loop do
@@ -27,5 +27,11 @@ loop do
 
   # puts ["Wrote this response:", headers, output].join("\n")
   client.close
+<<<<<<< Updated upstream
+=======
+end
+puts "\nResponse complete, exiting."
+
+>>>>>>> Stashed changes
 end
 puts "\nResponse complete, exiting."
