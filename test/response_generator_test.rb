@@ -155,7 +155,6 @@ class ResponseGeneratorTest < Minitest::Test
     response_generator = ResponseGenerator.new
 
   request = ["GET /word_search?word=kerrw HTTP/1.1",
->>>>>>> master
        "Host: 127.0.0.1:9292",
        "Connection: keep-alive",
        "Cache-Control: no-cache",
@@ -166,10 +165,7 @@ class ResponseGeneratorTest < Minitest::Test
        "Accept-Encoding: gzip, deflate, sdch",
        "Accept-Language: en-US,en;q=0.8"]
 
-<<<<<<< HEAD
-=======
        word = "kerrw"
        assert_equal "kerrw is not a known word", response_generator.path_filter(request)
   end
->>>>>>> master
 end
