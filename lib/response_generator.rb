@@ -3,14 +3,17 @@ require 'hurley'
 require 'socket'
 
 class ResponseGenerator
+
   attr_accessor :output
 
   def path_filter(request, counter = 0)
-    if request.join.split[1] == "/hello" then return hello(counter)
-    elsif request.join.split[1] == "/datetime" then return datetime
-    elsif request.join.split[1] == "/shutdown" then return shutdown(counter)
-    elsif request.join.include?("word_search") then return word_search(request)
-    else return diagnostics(request)
+    if     request.join.include?("/hello")      then return hello(counter)
+    elsif  request.join.include?("/datetime")   then return (datetime)
+    elsif  request.join.include?("/shutdown")   then return shutdown(counter)
+    elsif  request.join.include?("word_search") then return word_search(request)
+    elsif  request.join.include?("GET / HTTP/") then return diagnostics(request)
+    else
+      request
     end
   end
 
@@ -19,6 +22,7 @@ class ResponseGenerator
   end
 
   def diagnostics(request)
+    binding.pry
     result = ["Verb: #{request[0].split(" ")[0]}",
     "Path: #{request[0].split(" ")[1]}",
     "Protocol: #{request[0].split(" ")[2]}",
@@ -34,10 +38,6 @@ class ResponseGenerator
 
   def shutdown(counter)
     "Total Requests: #{counter+=1}"
-    # tcp_server = TCPServer.new(9292)
-    #
-    # client = tcp_server.accept
-    # client.close
   end
 
   def word_search(request)
@@ -93,9 +93,4 @@ class ResponseGenerator
     end
 
   end
-
-#ping = hurley.get
-
-
-
 end
