@@ -3,7 +3,6 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require 'socket'
 require 'hurley'
-require_relative '../lib/server_connector'
 
 class ServerConnectorTest < Minitest::Test
 
