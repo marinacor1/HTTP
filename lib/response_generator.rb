@@ -6,7 +6,7 @@ require_relative 'request'
 
 class ResponseGenerator
 
-  attr_reader :response_code, :diagnostic_result
+  attr_reader :response_code, :diagnostic_result, :game_counter
 
   def hello(counter)
     "HELLO WORLD(#{counter})"
@@ -46,7 +46,6 @@ class ResponseGenerator
       @game_counter += 1
       "#{@game_response} and your guess count is: #{@game_counter}"
     else
-      binding.pry
       game_output = Game.new(request, counter, @last_guess)
       @game_response = game_output.output
       @last_guess = game_output.value

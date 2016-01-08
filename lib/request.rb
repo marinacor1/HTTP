@@ -10,7 +10,6 @@ class RequestFilter
 
   def initialize
     @server_response = ResponseGenerator.new
-
   end
 
   def path_filter(request, counter = 0)
