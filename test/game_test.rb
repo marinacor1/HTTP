@@ -7,7 +7,9 @@ require_relative '../lib/game'
 require_relative '../lib/response_generator'
 
 class GameTest < Minitest::Test
+
   def test_guessing_game_prints_Good_Luck_at_initiation
+    skip
     response_generator = ResponseGenerator.new
     request = ["POST /game?param=80 HTTP/1.1",
                "Host: 127.0.0.1:9292",
@@ -20,10 +22,9 @@ class GameTest < Minitest::Test
                "Accept: */*",
                "Accept-Encoding: gzip, deflate",
                "Accept-Language: en-US,en;q=0.8"]
-    last_guess = 4
     counter = 0
     new_game = Game.new(request, counter, last_guess)
-    assert response_generator.path_filter(request).include?("Good Luck~")
+    assert_equal "Good Luck!", new_game.start_game
   end
 
   def test_gives_number_of_guesses
@@ -63,7 +64,7 @@ class GameTest < Minitest::Test
                "Accept: */*",
                "Accept-Encoding: gzip, deflate",
                "Accept-Language: en-US,en;q=0.8"]
-    correct_number = 7
+    @@value = 7
     guess = 49
     assert_equal "Your guess is too high; try again.",       response_generator.path_filter(request).output
 
@@ -85,7 +86,7 @@ class GameTest < Minitest::Test
                "DNT: 1",
                "Accept-Encoding: gzip, deflate",
                "Accept-Language: en-US,en;q=0.8"]
-    correct_number = 7
+    @value = 7
     guess = 2
     assert_equal "Your guess is too low; try again.",       response_generator.path_filter(request).output
   end
@@ -94,7 +95,7 @@ class GameTest < Minitest::Test
     skip
     response_generator = ResponseGenerator.new
     new_game = Game.new(request, counter, last_guess)
-    request = [["POST /game?param=80 HTTP/1.1",
+    request = ["POST /game?param=80 HTTP/1.1",
                "Host: 127.0.0.1:9292",
                "Connection: keep-alive",
                "Content-Length: 0",
@@ -105,12 +106,12 @@ class GameTest < Minitest::Test
                "Accept: */*",
                "Accept-Encoding: gzip, deflate",
                "Accept-Language: en-US,en;q=0.8"]
-    correct_number = 7
+    # @value = 7
     guess = 7
     assert_equal "You got it right! Way to go!",       response_generator.path_filter(request).output
   end
 
-  def test_test_that_game_takes_in_our_guess
+  def test_test_that_game_takes_in_guess
     skip
     response_generator = ResponseGenerator.new
     new_game = Game.new(request, counter, last_guess)

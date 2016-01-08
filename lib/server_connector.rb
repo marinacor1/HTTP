@@ -1,6 +1,7 @@
 require 'socket'
 require_relative 'response_generator'
 require 'pry'
+require_relative 'request'
 
 class ServerConnector
 
@@ -28,7 +29,12 @@ class ServerConnector
         response_generator.parse(request_lines)
         filtered_response = response_generator.path_filter(request_lines, counter)
 
-
+        @diagnostic_result = ["Verb: #{@verb}",
+                             "Path: #{@path}",
+                              "Protocol: #{@protocol}",
+                              "#{@host}",
+                              "Port: #{@port}",
+                              "Origin: #{@origin}", "Accept:#{@accept}"]
 
         puts "Sending response."
         response = "<pre>" + filtered_response + "</pre> <pre>" + response_generator.diagnostic_result.join("\n") + " </pre>"
