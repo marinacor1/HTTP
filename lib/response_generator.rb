@@ -1,11 +1,13 @@
 require 'pry'
 require 'hurley'
 require 'socket'
+require_relative 'game'
 
 class ResponseGenerator
 
   attr_reader :response_code, :diagnostic_result
   attr_accessor :output
+
 
   def path_filter(request, counter = 0)
     if     request.join.include? ("/hello")
@@ -14,9 +16,11 @@ class ResponseGenerator
        (datetime)
     elsif  request.join.include?("/shutdown")
        shutdown(counter)
-    elsif  request.join.include?("word_search")
+    elsif  request.join.include?("word_search?")
       word_search(request)
     elsif  request.join.include?("/start_game")
+       start_game
+    elsif  request.join.include?("/game?")
        guessing_game(request, counter)
      else
        ""
@@ -64,7 +68,28 @@ class ResponseGenerator
     end
   end
 
-  def start_game(request, counter = 0)
-    @game = Game.new
+  def start_game
+    @game_counter = 0
+    "Good Luck!"
+  end
+
+
+  def guessing_game(request, counter)
+    if @game_counter == nil
+      "Need to start a new game first"
+    elsif @last_guess == nil
+      game_output = Game.new(request, counter, last_guess = "")
+      game_output.output
+      @last_guess = game_output.value
+      @game_counter += 1
+      "#{game_output}\nYour guess count is: #{@game_counter}"
+    else
+      # binding.pry
+      game_output = Game.new(request, counter, @last_guess)
+      game_output.output
+      @last_guess = game_output.value
+      @game_counter += 1
+      "#{game_output}\nYour guess count is: #{@game_counter}"
+    end
   end
 end

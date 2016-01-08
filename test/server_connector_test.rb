@@ -4,7 +4,6 @@ require 'minitest/pride'
 require 'socket'
 require 'hurley'
 
-
 class ServerConnectorTest < Minitest::Test
 
   def test_server_have_connection

@@ -266,4 +266,19 @@ class ResponseGeneratorTest < Minitest::Test
     assert_equal "You got it right! Way to go!",       response_generator.path_filter(request).output
   end
 
+  def test_test_that_game_takes_in_our_guess
+    response_generator = ResponseGenerator.new
+    request = ["GET /game?param=value HTTP/1.1",
+               "Host: 127.0.0.1:9292",
+               "Connection: keep-alive",
+               "Cache-Control: no-cache",
+               "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36",
+               "Postman-Token: e49bc4ea-d770-684c-d3ed-fa87ca4fccde",
+               "Accept: */*",
+               "Accept-Encoding: gzip, deflate, sdch",
+               "Accept-Language: en-US,en;q=0.8"]
+
+    assert_equal "value", Game.new.guess
+  end
+
 end
