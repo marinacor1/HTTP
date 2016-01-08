@@ -2,7 +2,7 @@ require 'pry'
 require 'hurley'
 require 'socket'
 require_relative 'game'
-require_relative 'request'
+require_relative 'request_filter'
 
 class ResponseGenerator
 
