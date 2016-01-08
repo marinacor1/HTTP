@@ -12,8 +12,6 @@ class Game
     end
   end
 
-  end
-
   def redirect(request)
     guess = (request[0].split("=")[1].split(" ")[0]).to_i
     if guess > @value
