@@ -7,7 +7,7 @@ class ServerConnector
   counter = 0
   tcp_server = TCPServer.new(9292)
 
-  def start_server
+
       loop do
         client = tcp_server.accept
 
@@ -25,12 +25,13 @@ class ServerConnector
         end
         # binding.pry
         # diagnostics = response_generator.diagnostics(request_lines)
+        response_generator.parse(request_lines)
         filtered_response = response_generator.path_filter(request_lines, counter)
 
 
 
         puts "Sending response."
-        response = "<pre>" + filtered_response + "</pre>"
+        response = "<pre>" + filtered_response + "</pre> <pre>" + response_generator.diagnostic_result.join("\n") + " </pre>"
         output = "<html><head></head><body>#{response}</body></html>"
 
         headers = ["http/1.1 #{@response_code}",
@@ -50,7 +51,7 @@ class ServerConnector
 
         client.close
         puts "\nResponse complete, ready for next request."
-      end
+
     end
 
 

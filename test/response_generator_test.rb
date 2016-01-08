@@ -32,7 +32,6 @@ class ResponseGeneratorTest < Minitest::Test
                "Accept-Language: en-US,en;q=0.8"]
      counter = 0
 
-
     assert_equal "HELLO WORLD(#{counter})", response_generator.path_filter(request, counter)
   end
 
@@ -86,7 +85,6 @@ class ResponseGeneratorTest < Minitest::Test
                "DNT: 1",
                "Accept-Encoding: gzip, deflate",
                "Accept-Language: en-US,en;q=0.8"]
-              #  binding.pry
     assert_equal "Verb: POST", response_generator.path_filter(request)[0]
     assert_equal "Path: /", response_generator.path_filter(request)[1]
     assert_equal "Protocol: HTTP/1.1", response_generator.path_filter(request)[2]
@@ -146,7 +144,7 @@ class ResponseGeneratorTest < Minitest::Test
        "Accept-Encoding: gzip, deflate, sdch",
        "Accept-Language: en-US,en;q=0.8"]
 
-       assert_equal "coffee is a known word", response_generator.path_filter(request)
+       assert_equal "Coffee is a known word", response_generator.path_filter(request)
   end
 
   def test_word_search_gives_appropriate_message_for_unknown_word
@@ -164,7 +162,7 @@ class ResponseGeneratorTest < Minitest::Test
        "Accept-Encoding: gzip, deflate, sdch",
        "Accept-Language: en-US,en;q=0.8"]
 
-       assert_equal "kerrw is not a known word", response_generator.path_filter(request)
+       assert_equal "Kerrw is not a known word.", response_generator.path_filter(request)
   end
 
   def test_guessing_game_prints_Good_Luck_at_initiation
