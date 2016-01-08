@@ -46,8 +46,8 @@ class GameTest < Minitest::Test
      assert_equal "Need to start a new game first",
       response_generator.guessing_game(request, counter)
   end
+
   def test_gives_number_of_guesses
-    skip
     response_generator = ResponseGenerator.new
 
     request = ["POST /game?param=80 HTTP/1.1",
@@ -61,15 +61,17 @@ class GameTest < Minitest::Test
                "Accept: */*",
                "Accept-Encoding: gzip, deflate",
                "Accept-Language: en-US,en;q=0.8"]
+
      counter = 1
      last_guess = 13
+     response_generator.game_counter = 1
+     response_generator.guessing_game(request, counter)
 
-     assert_equal 1,
+     assert_equal 2,
       response_generator.game_counter
   end
 
   def test_correctly_outputs_if_guess_too_high
-    skip
     response_generator = ResponseGenerator.new
 
     request = ["POST /game?param=80 HTTP/1.1",
@@ -87,6 +89,8 @@ class GameTest < Minitest::Test
     counter = 1
     last_guess = 49
     new_game = Game.new(request, counter, last_guess)
+    response_generator.game_counter = 1
+    response_generator.guessing_game(request, counter)
 
     assert_equal "Your guess is too high; try again.",       new_game.output
 

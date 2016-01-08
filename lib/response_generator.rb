@@ -6,7 +6,8 @@ require_relative 'request_filter'
 
 class ResponseGenerator
 
-  attr_reader :response_code, :diagnostic_result, :game_counter
+  attr_reader :response_code, :diagnostic_result
+  attr_accessor :game_counter
 
   def hello(counter)
     "HELLO WORLD(#{counter})"
@@ -37,9 +38,9 @@ class ResponseGenerator
   end
 
   def guessing_game(request, counter)
-    if @game_counter == nil
+=    if @game_counter == nil
       "Need to start a new game first"
-    elsif @last_guess == nil
+    elsif last_guess == nil
       game_output = Game.new(request, counter, last_guess = nil)
       @game_response = game_output.output
       @last_guess = game_output.value

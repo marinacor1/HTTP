@@ -1,6 +1,6 @@
 class Game
- attr_reader :value, :output, :counter
- attr_accessor :guess_count, :last_guess
+ attr_reader :value, :counter
+ attr_accessor :guess_count, :last_guess, :output
 
   def initialize(request, counter, last_guess)
     if last_guess == nil
