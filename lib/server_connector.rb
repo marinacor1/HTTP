@@ -1,6 +1,6 @@
 require 'socket'
 require 'pry'
-require_relative 'request'
+require_relative 'request_filter'
 
 class ServerConnector
 

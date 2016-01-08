@@ -5,6 +5,7 @@ require 'minitest/pride'
 require 'hurley'
 require_relative '../lib/game'
 require_relative '../lib/response_generator'
+require_relative '../lib/request_filter'
 
 class GameTest < Minitest::Test
 
