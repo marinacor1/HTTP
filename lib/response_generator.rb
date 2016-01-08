@@ -38,7 +38,7 @@ class ResponseGenerator
   end
 
   def guessing_game(request, counter)
-=    if @game_counter == nil
+    if @game_counter == nil
       "Need to start a new game first"
     elsif last_guess == nil
       game_output = Game.new(request, counter, last_guess = nil)
