@@ -56,7 +56,3 @@ class ServerConnector
 
 
     end
-
-        # if __FILE__ == $0
-        #   ServerConnector.new.start_server
-        # end

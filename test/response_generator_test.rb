@@ -2,7 +2,6 @@ gem 'minitest', '~> 5.2'
 require 'pry'
 require 'minitest/autorun'
 require 'minitest/pride'
-# require 'socket'
 require 'hurley'
 require_relative '../lib/response_generator'
 
@@ -14,7 +13,7 @@ class ResponseGeneratorTest < Minitest::Test
   end
 
   def test_responds_to_HTTP_requests
-  client = Hurley::Client.new "http://127.0.0.1:9292/"
+     client = Hurley::Client.new "http://127.0.0.1:9292/"
      assert client.connection
   end
 
@@ -34,24 +33,6 @@ class ResponseGeneratorTest < Minitest::Test
 
     assert_equal "HELLO WORLD(#{counter})", response_generator.path_filter(request, counter)
   end
-
-  # def test_hello_world_counter_increases
-  #   response_generator = ResponseGenerator.new
-  #   response_generator_2 = ResponseGenerator.new
-  #   response_generator_3 = ResponseGenerator.new
-  #   request = ["GET /hello HTTP/1.1",
-  #             "Host: 127.0.0.1:9292",
-  #             "Connection: keep-alive",
-  #             "Cache-Control: no-cache",
-  #             "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36",
-  #             "Postman-Token: 2ce77957-f9bc-d829-5c52-52b4dabe0864",
-  #             "Accept: */*",
-  #             "DNT: 1",
-  #             "Accept-Encoding: gzip, deflate, sdch",
-  #             "Accept-Language: en-US,en;q=0.8"]
-  #   counter = 0
-  #  assert_equal "HELLO WORLD(3)", response_generator.path_filter(request, counter)
-  # end
 
   def test_correctly_parses_verb
     response_generator = ResponseGenerator.new
@@ -95,7 +76,6 @@ class ResponseGeneratorTest < Minitest::Test
   end
 
   def test_returns_date_and_time_when_called
-    # skip
     response_generator = ResponseGenerator.new
     request =["GET /datetime HTTP/1.1",
              "Host: 127.0.0.1:9292",
@@ -130,40 +110,37 @@ class ResponseGeneratorTest < Minitest::Test
   end
 
   def test_word_search_gives_appropriate_message_for_known_word
-    # skip
     response_generator = ResponseGenerator.new
 
-  request = ["GET /word_search?word=coffee HTTP/1.1",
-       "Host: 127.0.0.1:9292",
-       "Connection: keep-alive",
-       "Cache-Control: no-cache",
-       "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36",
-       "Postman-Token: db8775b9-67e3-d5ed-d66a-58661ad1c420",
-       "Accept: */*",
-       "DNT: 1",
-       "Accept-Encoding: gzip, deflate, sdch",
-       "Accept-Language: en-US,en;q=0.8"]
+    request = ["GET /word_search?word=coffee HTTP/1.1",
+               "Host: 127.0.0.1:9292",
+               "Connection: keep-alive",
+               "Cache-Control: no-cache",
+               "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36",
+               "Postman-Token: db8775b9-67e3-d5ed-d66a-58661ad1c420",
+               "Accept: */*",
+               "DNT: 1",
+               "Accept-Encoding: gzip, deflate, sdch",
+               "Accept-Language: en-US,en;q=0.8"]
 
        assert_equal "Coffee is a known word.", response_generator.path_filter(request)
   end
 
   def test_word_search_gives_appropriate_message_for_unknown_word
-    # skip
     response_generator = ResponseGenerator.new
 
-  request = ["GET /word_search?word=kerrw HTTP/1.1",
-       "Host: 127.0.0.1:9292",
-       "Connection: keep-alive",
-       "Cache-Control: no-cache",
-       "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36",
-       "Postman-Token: db8775b9-67e3-d5ed-d66a-58661ad1c420",
-       "Accept: */*",
-       "DNT: 1",
-       "Accept-Encoding: gzip, deflate, sdch",
-       "Accept-Language: en-US,en;q=0.8"]
+     request = ["GET /word_search?word=kerrw HTTP/1.1",
+                 "Host: 127.0.0.1:9292",
+                 "Connection: keep-alive",
+                 "Cache-Control: no-cache",
+                 "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36",
+                 "Postman-Token: db8775b9-67e3-d5ed-d66a-58661ad1c420",
+                 "Accept: */*",
+                 "DNT: 1",
+                 "Accept-Encoding: gzip, deflate, sdch",
+                 "Accept-Language: en-US,en;q=0.8"]
 
        assert_equal "Kerrw is not a known word.", response_generator.path_filter(request)
   end
-
 
 end

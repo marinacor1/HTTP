@@ -10,17 +10,17 @@ class ResponseGenerator
 
 
   def path_filter(request, counter = 0)
-    if     request.join.include? ("/hello")
+    if request.join.include? ("/hello")
        hello(counter)
-    elsif  request.join.include?("/datetime")
+    elsif request.join.include?("/datetime")
        (datetime)
-    elsif  request.join.include?("/shutdown")
+    elsif request.join.include?("/shutdown")
        shutdown(counter)
-    elsif  request.join.include?("word_search?")
+    elsif request.join.include?("word_search?")
       word_search(request)
-    elsif  request.join.include?("/start_game")
+    elsif request.join.include?("/start_game")
        start_game
-    elsif  request.join.include?("/game?")
+    elsif request.join.include?("/game?")
        guessing_game(request, counter)
      else
        ""
@@ -84,7 +84,6 @@ class ResponseGenerator
       @game_counter += 1
       "#{game_output}\nYour guess count is: #{@game_counter}"
     else
-      # binding.pry
       game_output = Game.new(request, counter, @last_guess)
       game_output.output
       @last_guess = game_output.value
