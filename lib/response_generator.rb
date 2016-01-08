@@ -7,7 +7,6 @@ require_relative 'request'
 class ResponseGenerator
 
   attr_reader :response_code, :diagnostic_result
-  attr_accessor :output
 
   def hello(counter)
     "HELLO WORLD(#{counter})"
@@ -40,17 +39,18 @@ class ResponseGenerator
     if @game_counter == nil
       "Need to start a new game first"
     elsif @last_guess == nil
-      game_output = Game.new(request, counter, last_guess = "")
-      game_output.output
+      game_output = Game.new(request, counter, last_guess = nil)
+      @game_response = game_output.output
       @last_guess = game_output.value
       @game_counter += 1
-      "#{game_output}\nYour guess count is: #{@game_counter}"
+      "#{@game_response} and your guess count is: #{@game_counter}"
     else
+      binding.pry
       game_output = Game.new(request, counter, @last_guess)
-      game_output.output
+      @game_response = game_output.output
       @last_guess = game_output.value
       @game_counter += 1
-      "#{game_output}\nYour guess count is: #{@game_counter}"
+      "#{@game_response} and your guess count is: #{@game_counter}"
     end
   end
 
