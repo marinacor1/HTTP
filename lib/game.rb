@@ -13,7 +13,6 @@ class Game
   end
 
   def redirect(request)
-    binding.pry
     guess = (request[0].split("=")[1].split(" ")[0]).to_i
     if guess > @value
       @ouput = "Your guess is too high; try again."
