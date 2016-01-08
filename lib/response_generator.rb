@@ -28,20 +28,21 @@ class ResponseGenerator
   end
 
   def parse(request)
-    binding.pry
     @verb = request[0].split(" ")[0]
     @path = request[0].split(" ")[1]
     @protocol = request[0].split(" ")[2]
     @host = request[1]
-    @port = request[1][-4]
-    # request[1][-3]request[1][-2]}request[1][-1]
+    @port = request[1][-4]+request[1][-3]+request[1][-2]+request[1][-1]
     @origin = request[1].split(" ")[1].split(":")[0]
-    @accept = request[6].split(":")[1]
-    # request[8]request[11].split(";")[1]
+    request.map do |line|
+      if line.include?("Accept:")
+        @accept = line.split(":")[1]
+      end
+    end
     @diagnostic_result = ["Verb: #{@verb}",
     "Path: #{@path}",
     "Protocol: #{@protocol}", "#{@host}",
-    "Port:  #{@port}",
+    "Port: #{@port}",
     "Origin: #{@origin}", "Accept:#{@accept}"]
   end
 
@@ -63,6 +64,7 @@ class ResponseGenerator
     end
   end
 
-  def guessing_game(request, counter = 0)
+  def start_game(request, counter = 0)
+    @game = Game.new
   end
 end

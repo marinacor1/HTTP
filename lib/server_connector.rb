@@ -3,6 +3,7 @@ require_relative 'response_generator'
 require 'pry'
 
 class ServerConnector
+
   response_generator = ResponseGenerator.new
   counter = 0
   tcp_server = TCPServer.new(9292)
@@ -23,8 +24,7 @@ class ServerConnector
         if request_lines.join.include?("/favicon.ico")
           counter -= 1
         end
-        # binding.pry
-        # diagnostics = response_generator.diagnostics(request_lines)
+
         response_generator.parse(request_lines)
         filtered_response = response_generator.path_filter(request_lines, counter)
 

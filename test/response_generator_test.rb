@@ -68,7 +68,7 @@ class ResponseGeneratorTest < Minitest::Test
                "Accept-Encoding: gzip, deflate",
                "Accept-Language: en-US,en;q=0.8"]
 
-    assert_equal "Verb: POST", response_generator.path_filter(request)[0]
+    assert_equal "Verb: POST", response_generator.parse(request)[0]
   end
 
   def test_correctly_parses_through_request
@@ -85,13 +85,13 @@ class ResponseGeneratorTest < Minitest::Test
                "DNT: 1",
                "Accept-Encoding: gzip, deflate",
                "Accept-Language: en-US,en;q=0.8"]
-    assert_equal "Verb: POST", response_generator.path_filter(request)[0]
-    assert_equal "Path: /", response_generator.path_filter(request)[1]
-    assert_equal "Protocol: HTTP/1.1", response_generator.path_filter(request)[2]
-    assert_equal "Host: 127.0.0.1:9292", response_generator.path_filter(request)[3]
-    assert_equal "Port: 9292", response_generator.path_filter(request)[4]
-    assert_equal "Origin: 127.0.0.1", response_generator.path_filter(request)[5]
-    assert_equal "Accept: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36Accept: */*q=0.8", response_generator.path_filter(request)[6]
+    assert_equal "Verb: POST", response_generator.parse(request)[0]
+    assert_equal "Path: /", response_generator.parse(request)[1]
+    assert_equal "Protocol: HTTP/1.1", response_generator.parse(request)[2]
+    assert_equal "Host: 127.0.0.1:9292", response_generator.parse(request)[3]
+    assert_equal "Port: 9292", response_generator.parse(request)[4]
+    assert_equal "Origin: 127.0.0.1", response_generator.parse(request)[5]
+    assert_equal "Accept: */*", response_generator.parse(request)[6]
   end
 
   def test_returns_date_and_time_when_called
@@ -144,7 +144,7 @@ class ResponseGeneratorTest < Minitest::Test
        "Accept-Encoding: gzip, deflate, sdch",
        "Accept-Language: en-US,en;q=0.8"]
 
-       assert_equal "Coffee is a known word", response_generator.path_filter(request)
+       assert_equal "Coffee is a known word.", response_generator.path_filter(request)
   end
 
   def test_word_search_gives_appropriate_message_for_unknown_word
