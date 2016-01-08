@@ -3,16 +3,17 @@ class Game
  attr_accessor :guess_count, :last_guess
 
   def initialize(request, counter, last_guess)
-    if last_guess != ""
-      redirect(request)
-      @value = last_guess
-    else
+    if last_guess == nil
       @value = rand(100)
+      redirect(request)
+    else
+      @value = last_guess
       redirect(request)
     end
   end
 
   def redirect(request)
+    binding.pry
     guess = (request[0].split("=")[1].split(" ")[0]).to_i
     if guess > @value
       @ouput = "Your guess is too high; try again."

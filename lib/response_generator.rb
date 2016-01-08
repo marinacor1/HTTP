@@ -32,6 +32,7 @@ class ResponseGenerator
 
   def start_game
     @game_counter = 0
+    @last_guess = nil
     "Good Luck!"
   end
 

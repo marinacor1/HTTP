@@ -6,29 +6,29 @@ require_relative 'response_generator'
 
 class RequestFilter
 
-  def initialize(request)
-    @request = request
-    response_generator = ResponseGenerator.new
-  end
+  attr_reader :diagnostic_result
 
-  attr_accessor :diagnostic_result
+  def initialize
+    @server_response = ResponseGenerator.new
+
+  end
 
   def path_filter(request, counter = 0)
     if request.join.include? ("/hello")
-       response_generator.hello(counter)
+       @server_response.hello(counter)
     elsif request.join.include?("/datetime")
-       response_generator.datetime
+       @server_response.datetime
     elsif request.join.include?("/shutdown")
-       response_generator.shutdown(counter)
+       @server_response.shutdown(counter)
     elsif request.join.include?("word_search?")
-      response_generator.word_search(request)
+      @server_response.word_search(request)
     elsif request.join.include?("/start_game")
-       response_generator.start_game
+       @server_response.start_game
     elsif request.join.include?("/game?")
-       response_generator.guessing_game(request, counter)
+       @server_response.guessing_game(request, counter)
      else
        ""
-    end
+     end
   end
 
   def parse(request)
@@ -39,13 +39,19 @@ class RequestFilter
     @port = request[1][-4]+request[1][-3]+request[1][-2]+request[1][-1]
     @origin = request[1].split(" ")[1].split(":")[0]
     request.map do |line|
-        if line.include?("Accept:")
-          @accept = line.split(":")[1]
-        end
+      if line.include?("Accept:")
+        @accept = line.split(":")[1]
       end
-
+    end
   end
 
-
+  def diagnostic_result
+    ["Verb: #{@verb}",
+    "Path: #{@path}",
+    "Protocol: #{@protocol}",
+    "#{@host}",
+    "Port: #{@port}",
+    "Origin: #{@origin}", "Accept:#{@accept}"]
+  end
 
 end

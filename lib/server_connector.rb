@@ -1,11 +1,10 @@
 require 'socket'
-require_relative 'response_generator'
 require 'pry'
 require_relative 'request'
 
 class ServerConnector
 
-  response_generator = ResponseGenerator.new
+  filtered_request = RequestFilter.new
   counter = 0
   tcp_server = TCPServer.new(9292)
 
@@ -26,18 +25,13 @@ class ServerConnector
           counter -= 1
         end
 
-        response_generator.parse(request_lines)
-        filtered_response = response_generator.path_filter(request_lines, counter)
+        filtered_request.parse(request_lines)
+        filtered_response = filtered_request.path_filter(request_lines, counter)
 
-        @diagnostic_result = ["Verb: #{@verb}",
-                             "Path: #{@path}",
-                              "Protocol: #{@protocol}",
-                              "#{@host}",
-                              "Port: #{@port}",
-                              "Origin: #{@origin}", "Accept:#{@accept}"]
+
 
         puts "Sending response."
-        response = "<pre>" + filtered_response + "</pre> <pre>" + response_generator.diagnostic_result.join("\n") + " </pre>"
+        response = "<pre>" + filtered_response + "</pre> <pre>" + filtered_request.diagnostic_result.join("\n") + " </pre>"
         output = "<html><head></head><body>#{response}</body></html>"
 
         headers = ["http/1.1 #{@response_code}",
